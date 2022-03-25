@@ -1,24 +1,25 @@
 let todoItemsContainer = document.getElementById("todoItemsContainer");
 let addTodoButton = document.getElementById("addTodoButton");
+let saveTodoButton = document.getElementById("saveTodoButton");
 
-let todoList = [
-    {
-        text: "Learn HTML",
-        uniqueNo: 1
-    },
-    {
-        text: "Learn CSS",
-        uniqueNo: 2
-    },
-    {
-        text: "Learn JavaScript",
-        uniqueNo: 3
-    },
-    {
-        text: "Learn React",
-        uniqueNo: 4
-    },
-];
+// let todoList = [
+//     {
+//         text: "Learn HTML",
+//         uniqueNo: 1
+//     },
+//     {
+//         text: "Learn CSS",
+//         uniqueNo: 2
+//     },
+//     {
+//         text: "Learn JavaScript",
+//         uniqueNo: 3
+//     },
+//     {
+//         text: "Learn React",
+//         uniqueNo: 4
+//     },
+// ];
 
 function onAddTodo() {
     let todosCount = todoList.length;
@@ -35,7 +36,7 @@ function onAddTodo() {
         text: userInputValue,
         uniqueNo: todosCount
     }
-
+    todoList.push(newTodo);
     createAndAppendTodo(newTodo);
     userInputElement.value = "";
 }
@@ -114,7 +115,25 @@ function createAndAppendTodo(todo) {
 // createAndAppendTodo(todoList[1]);
 // createAndAppendTodo(todoList[2]);
 
+let todoList = getTodoListFromLocalStorage();
+
 for (let eachTodo of todoList) {
     createAndAppendTodo(eachTodo);
+}
+
+saveTodoButton.onclick = function() {
+    console.log("Save Todo Button Clicked");
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+}
+
+function getTodoListFromLocalStorage() {
+    let stringifiedTodoList = localStorage.getItem("todoList");
+    let parsedTodoList = JSON.parse(stringifiedTodoList);
+
+    if (parsedTodoList === null) {
+        return [];
+    } else {
+        return parsedTodoList;
+    }
 }
 
