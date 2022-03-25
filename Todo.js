@@ -67,6 +67,8 @@ function onDeleteTodo(todoId) {
         } else {
             return false;
         }
+
+        
     })
     todoList.splice(deleteItemIndex,1);
 }
